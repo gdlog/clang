@@ -45,6 +45,19 @@ for(初期化；条件；計算){
 
 ~~~
 
+### 入力した数の回数　出力
+~~~
+	int num;
+	printf("数を入力してください\n");
+	scanf("%d", &num);
+	printf("数は%d\n", num);
+
+	int i;
+	for ( i = 0; i <= num; i++)
+	{
+		printf("iは%d\n", i);
+	}
+~~~
 
 
 ### 2の倍数
