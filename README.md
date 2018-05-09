@@ -62,7 +62,7 @@ whileはdefault(それ以外)の値の時は一度も実行されないが、
 while do は一回実行される
 
 
-### if & switch
+### if & switch 見たときにわかりやすく書くのが大事！！
 + ifは条件式　switchは変数
 + caseはラベルに処理が飛ぶ
 + break;で処理を抜ける
