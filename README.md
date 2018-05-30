@@ -1,6 +1,10 @@
 # clang
 C言語の自分で書いたコードをまとめます
 
+### system関数
+~~~
+System("cls");
+~~~
 
 ## hello,world
 ~~~
