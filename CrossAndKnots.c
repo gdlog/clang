@@ -3,148 +3,135 @@
 
 
 int board[9]={ 0 };
-int hand, cpuhand;
+int hand, cpuhand, turnuser, turnvalue;
+
+//プロトタイプ宣言
+int checkwinflag(int,int);
+int printdata(int[]);
+
 
 int main(void) {
 
-	
-	int winflag = 0; //ゲーム終わるフラグ 2:ユーザーの勝利　3:相手の勝利
+	int winflag = 0; //ゲーム終わるフラグ
+	int turnuser = 1; //
 
 	while (winflag < 1) {
 
 		//----------------------------------------------------------------------------------------------------------------------------------
-		printf("\n__________\n");
-		int i;
-		for (i = 0; i < 9; i++)
-		{
-			if (i % 3 == 0) {
-				printf("\n");
-			}
-			if (board[i]) {
-				if (board[i] == 10) {
-					printf("[O]");
-				}
-				else if (board[i] == 11) {
-					printf("[X]");
-				}
-			}
-			else {
-				//nullなら番号表示
-				printf("(%d)", i);
-			}
-
-		}
+		printdata(board);
 		//----------------------------------------------------------------------------------------------------------------------------------
-		//自分のターン
-		int hand = 0;//初期化
-		printf("\n\n\n");
-		printf("手を入力してください\n");
-		scanf("%d", &hand);
-		
-		board[hand] = 10;
-		printf("自分：%d\n", hand);
+		if (turnuser==1) {
+			//自分のターン
+			turnvalue = 10;
+			int hand = 0;//初期化
+			printf("\n\nあなたのターン\n手を入力してください\n自分：");
+			scanf("%d", &hand);
+			board[hand] = 10;
+			winflag = checkwinflag(turnvalue, hand);
 
+			turnuser = 2;
+		}
+		else {
+			turnvalue = 11;
+			do {
+				cpuhand = 0;//初期化
+				cpuhand = rand();
+				cpuhand = cpuhand % 9;
+			} while (board[cpuhand]>9);
 
-		//勝利チェック
-		//winflag = checkWin(hand, board);
+			board[cpuhand] = turnvalue;
+			printf("\n\nCPUのターン\nCPU：%d\n", cpuhand);
 
-		//縦チェック
-		if (
-			(board[hand - 3] == 10 && board[hand + 3] == 10)
-			|| (board[hand - 3] == 10 && board[hand - 6] == 10)
-			|| (board[hand + 3] == 10 && board[hand + 6] == 10)
-			) {
-			winflag = 2;
-		}
-		//横チェック	
-		if (
-			(board[hand - 1] == 10 && board[hand + 1] == 10)
-			|| (board[hand - 1] == 10 && board[hand - 2] == 10)
-			|| (board[hand + 1] == 10 && board[hand + 2] == 10)
-			) {
-			winflag = 2;
-		}
-		//右斜めチェック	
-		if (
-			(board[hand - 2] == 10 && board[hand + 2] == 10)
-			|| (board[hand - 2] == 10 && board[hand - 4] == 10)
-			|| (board[hand + 2] == 10 && board[hand + 4] == 10)
-			) {
-			winflag = 2;
-		}
-		//左斜めチェック	
-		if (
-			(board[hand - 4] == 10 && board[hand + 4] == 10)
-			|| (board[hand - 4] == 10 && board[hand - 8] == 10)
-			|| (board[hand + 4] == 10 && board[hand + 8] == 10)
-			) {
-			winflag = 2;
+			winflag = checkwinflag(turnvalue, cpuhand);
+			turnuser = 1;
 		}
 
-		//----------------------------------------------------------------------------------------------------------------------------------
-		//CPU
-		do {
-			cpuhand = 0;//初期化
-			cpuhand = rand();
-			cpuhand = cpuhand % 9;
-		} while (board[cpuhand]>10);
 
-
-		board[cpuhand] = 11;
-		printf("CPU：%d\n", cpuhand);
-
-		//縦チェック
-		if (
-			(board[cpuhand - 3] == 11 && board[cpuhand + 3] == 11)
-			|| (board[cpuhand - 3] == 11 && board[cpuhand - 6] == 11)
-			|| (board[cpuhand + 3] == 11 && board[cpuhand + 6] == 11)
-			) {
-			winflag = 3;
-		}
-		//横チェック	
-		if (
-			(board[cpuhand - 1] == 11 && board[cpuhand + 1] == 11)
-			|| (board[cpuhand - 1] == 11 && board[cpuhand - 2] == 11)
-			|| (board[cpuhand + 1] == 11 && board[cpuhand + 2] == 11)
-			) {
-			winflag = 3;
-		}
-		//右斜めチェック	
-		if (
-			(board[cpuhand - 2] == 11 && board[cpuhand + 2] == 11)
-			|| (board[cpuhand - 2] == 11 && board[cpuhand - 4] == 11)
-			|| (board[cpuhand + 2] == 11 && board[cpuhand + 4] == 11)
-			) {
-			winflag = 3;
-		}
-		//左斜めチェック	
-		if (
-			(board[cpuhand - 4] == 11 && board[cpuhand + 4] == 11)
-			|| (board[cpuhand - 4] == 11 && board[cpuhand - 8] == 11)
-			|| (board[cpuhand + 4] == 11 && board[cpuhand + 8] == 11)
-			) {
-			winflag = 3;
-		}
-		//----------------------------------------------------------------------------------------------------------------------------------
-
-
-
-	}
-
-	
-
-	if (winflag==2) {
-		printf("あなたの勝ち！！！\n");
-	}
-	else {
-		printf("CPUの勝ち！！！\n");	
 	}
 
 	printf("ゲーム終了\n");
+	printdata(board);
+
+	//----------------------------------------------------------------------------------------------------------------------------------
+	
+
+
 
 	return 0;
 
 }
+
+int printdata(int data[]) {
+
+	int i;
+	for (i = 0; i < 9; i++)
+	{
+		if (i % 3 == 0) {
+			printf("\n");
+		}
+		if (data[i]) {
+			if (data[i] == 10) {
+				printf("[O]");
+			}
+			else if (data[i] == 11) {
+				printf("[X]");
+			}
+		}
+		else {
+			//nullなら番号表示
+			printf("(%d)", i);
+		}
+
+	}
+	printf("\n__________\n");
+}
+
+//winflagまとめ
+int checkwinflag(int turn, int turnshand)
+{
+	int checkwinflag=0;
+	if (
+		(board[turnshand - 3] == turn && board[turnshand + 3] == turn)
+		|| (board[turnshand - 3] == turn && board[turnshand - 6] == turn)
+		|| (board[turnshand + 3] == turn && board[turnshand + 6] == turn)
+		) {
+		//縦チェック
+		checkwinflag = 1;
+		printf("縦がそろった\n");
+	}
+	if (
+		(board[turnshand - 1] == turn && board[turnshand + 1] == turn)
+		|| (board[turnshand - 1] == turn && board[turnshand - 2] == turn)
+		|| (board[turnshand + 1] == turn && board[turnshand + 2] == turn)
+		) {
+		//横チェック
+		checkwinflag = 2;
+		printf("横がそろった\n");
+	}
+	if (
+		(board[turnshand - 2] == turn && board[turnshand + 2] == turn)
+		|| (board[turnshand - 2] == turn && board[turnshand - 4] == turn)
+		|| (board[turnshand + 2] == turn && board[turnshand + 4] == turn)
+		) {
+		//右斜めチェック	
+		checkwinflag = 3;
+		printf("右斜めがそろった\n");
+	}
+	if (
+		(board[turnshand - 4] == turn && board[turnshand + 4] == turn)
+		|| (board[turnshand - 4] == turn && board[turnshand - 8] == turn)
+		|| (board[turnshand + 4] == turn && board[turnshand + 8] == turn)
+		) {
+		//左斜めチェック	
+		checkwinflag = 4;
+		printf("左斜めがそろった\n");
+	}
+
+	return checkwinflag;
+}
+
+
+
 /*
 
 
