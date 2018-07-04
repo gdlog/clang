@@ -1,0 +1,76 @@
+/*
+//globalで使う
+int board[3][3]={ 0 };
+int flag, turn;
+
+//プロトタイプ宣言
+int Input();
+int Judge();
+int View();
+
+
+int main(void) {
+while (1) {
+View();
+if (flag == 1) {
+return 0; //ループを抜ける
+}
+else {
+Input();
+Judge();
+}
+}
+
+return 0;
+}
+
+
+int Input() {
+int x, y;
+do {
+scanf("%d",&x);
+scanf("%d",&y);
+
+} while ( board[y][x] != 0 )
+{
+board[y][x] = trun;
+turn = turn % 2 + 1;
+
+}
+}
+
+
+int View() {
+int i, j;
+for (i = 1; i <3; i++){
+for (j = 1; j <3; j++){
+switch (board[i][j]) {
+case 1:
+printf("□");
+break;
+case 2:
+printf("●");
+break;
+case 3:
+printf("X");
+break;
+}
+}
+}
+printf("\n__________\n");
+}
+
+int Judge()
+{
+//縦
+if (board[1][0] == 1) {}
+//横
+
+}
+
+
+
+
+
+
+*/
