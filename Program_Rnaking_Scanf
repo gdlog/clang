@@ -1,0 +1,74 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct seiseki {
+	int no;		/* 学生番号 */
+	char name[20];	/* 氏名 */
+	int kokugo;		/* 国語 */
+	int sugaku;		/* 数学 */
+};
+
+int main(void) {
+
+	int i;
+
+
+	int sugaku_min = 0;
+	int sugaku_max = 0;
+	int kokugo_min = 0;
+	int kokugo_max=0;
+
+	struct seiseki seito[10];
+	for (i = 0; i < 10; i++) {
+		
+		seito[i].no = i + 1;
+		printf("出席番号%d番さんの名前を入力して下さい\n\n", seito[i].no);
+		scanf("%s", &seito[i].name);
+
+		printf("国語と数学の点数を入力して下さい\n\n");
+		scanf("%d %d", &seito[i].kokugo, &seito[i].sugaku);
+
+	}
+	
+	for (i = 0; i < 10; i++) {
+		printf("%d番 %s 国語：%d　数学：%d\n\n", seito[i].no, seito[i].name, seito[i].kokugo, seito[i].sugaku);
+		if (i==0)
+		{
+			int sugaku_min = seito[i].sugaku;
+			int sugaku_max = seito[i].sugaku;
+			int kokugo_min = seito[i].kokugo;
+			int kokugo_max = seito[i].kokugo;
+		}
+		else {
+			//数学最低点の人の調べる　暫定一位の点数より調査対象の点数の方が低かったら、１位を交代
+			if (seito[sugaku_min].sugaku > seito[i].sugaku) {
+				sugaku_min = i;
+			}
+			//数学max
+			if (seito[sugaku_max].sugaku < seito[i].sugaku) {
+				sugaku_max = i;
+			}
+
+			//数学最低点の人の調べる　暫定一位の点数より調査対象の点数の方が低かったら、１位を交代
+			if (seito[kokugo_min].kokugo > seito[i].kokugo) {
+				kokugo_min = i;
+			}
+			//数学max
+			if (seito[kokugo_max].kokugo < seito[i].kokugo) {
+				kokugo_max = i;
+			}
+
+
+
+		}
+		
+	
+	}
+
+	printf("数学の最低点： %d番 %s 数学：%d\n\n", seito[sugaku_min].no, seito[sugaku_min].name, seito[sugaku_min].sugaku);
+	printf("数学の最高点： %d番 %s 数学：%d\n\n", seito[sugaku_max].no, seito[sugaku_max].name,seito[sugaku_max].sugaku);
+	printf("国語の最低点： %d番 %s 国語：%d\n\n", seito[kokugo_min].no, seito[kokugo_min].name, seito[kokugo_min].kokugo);
+	printf("国語の最高点： %d番 %s 国語：%d\n\n", seito[kokugo_max].no, seito[kokugo_max].name, seito[kokugo_max].kokugo);
+	return 0; //ループを抜ける
+
+}
