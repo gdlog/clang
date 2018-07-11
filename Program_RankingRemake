@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+int i;
+struct Student {
+	char name[32];
+	int tensu[2]; //kouritu 重視（＋拡張性）
+};
+
+
+
+
+struct Student cg1e[10];
+char kamoku[2][6] = { "国語","数学" }; //効率重視
+
+void Input(void) 
+{
+	int i;
+	for (i=0;i<10;i++) 
+	{
+
+		printf("名前を入力して下さい\n\n");
+		scanf("%s", &cg1e[i].name);
+
+		printf("国語の点数を入力して下さい\n\n");
+		scanf("%d", &cg1e[i].tensu[0]);
+
+		printf("数学の点数を入力して下さい\n\n");
+		scanf("%d", &cg1e[i].tensu[1]);
+	}
+}
+
+void Sort(int flg,int num) 
+{
+	int i, j;
+	struct Student work;
+
+	for (i = 0;i < 10;i++)
+	{
+		for (j = 0;j < 10;j++)
+		{
+			if (flg==0)
+			{
+				if (cg1e[i].tensu[num] < cg1e[j].tensu[num])
+				{
+					//構造体は"型を作る"という概念-> int等と同じ　配列はできない
+					work = cg1e[i]; //struct型なので丸ごと入る
+					cg1e[i] = cg1e[j];
+					cg1e[j] = work;
+
+				}
+			}
+			else 
+			{
+				if (cg1e[i].tensu[num] > cg1e[j].tensu[num])
+				{
+					work = cg1e[i]; //struct型なので丸ごと入る
+					cg1e[i] = cg1e[j];
+					cg1e[j] = work;
+
+				}
+			}
+		}
+	}
+
+}
+
+
+void View(int flg,int num)
+{
+	int work;
+	Sort(flg,num);
+	work = cg1e[i].tensu[num];
+	for (i=0;i<10;i++) 
+	{
+		if (cg1e[i].tensu[num]==work)
+		{
+			printf("名前：%s\n\n", cg1e[i].name);
+			printf("%s:%s\n",kamoku[num], cg1e[i].tensu[num]);
+		}
+	}
+}
+
+
+int main(void) {
+	
+
+	Input(); //イベント駆動型ならここで回数を設定してforでまわすといい
+	for(i=0;i<2;i++){
+
+		printf("%sの最高点",kamoku[i]);
+		View(0, 1);
+
+		printf("%sの最低点", kamoku[i]);
+		View(1, 1);
+
+	}
+
+	return 0;
+
+}
