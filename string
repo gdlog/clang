@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+
+int main(void){
+
+    int n;
+    scanf("%d",&n);
+    printf("入力された整数は%dです。\n",n);
+
+
+    char mark[1];
+    char plus[1]="+";
+    int inputX;
+    int inputY;
+    int inputA;
+    scanf("%s %d %d %d",mark,&inputX,&inputY,&inputA);
+
+    printf("入力された文字は%sです",mark);
+    
+    if (strncmp(mark, plus, 1) == 0) {
+
+        printf("this is +");
+    }
+    
+
+
+
+
+
+
+
+    return 0;
+}
